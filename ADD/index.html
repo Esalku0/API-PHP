@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        function getGroupInfo() {
+            var strBusquedaGrupo = document.getElementById('Nombre').value;
+            axios.get("https://api.deezer.com/search?q=" + strBusquedaGrupo).then(response => {
+                console.log(response.data);
+
+                let image="";
+                image=response.data.data[0].album.cover_big
+                let as = "";
+                as = response.data.data[0].title + "\n";
+                as += response.data.data[0].album.title;
+
+                let url="";
+                url=response.data.data[0].preview;
+                alert(url)
+
+                document.getElementById("audio").value = url;
+                document.getElementById("image").src = image;
+                document.getElementById("title").value = as;
+            }).catch(error => {
+                console.error(error);
+                alert("error: " + error)
+            });
+        } 
+    </script>
+
+
+    <script type="text/javascript">
+        function guardar() {
+            alert("bon dia")
+            $.ajax({
+                type: "POST", //metode POST per a enviar dades al servidor
+                url: "conexion.php", // ruta del fitxer PHP del servidor
+                data: {title:document.getElementById("title").value}, // dades a enviar (p.ex. {valor:valor, nom:nom})
+                success: function (response) { //resultat del PHP del servidor
+                    alert(response);
+                },
+                error: function () {
+                    alert("Error");
+                }
+            });
+        }
+    </script>
+
+
+
+
+    <script>
+        function ejecutar() {
+            alert("Rafa putero");
+        }
+    </script>
+
+    <input type="text" id="Nombre" name="Nombre">
+    <br>
+    <textarea id="title"></textarea>
+
+    <button type="button" id="Nombre" onclick=getGroupInfo()>Click Me!</button>
+    <button type="button" id="a" onclick=guardar()>Guardar</button>
+    <img src="image" id="image">
+    <audio controls id="audio">
+        <source src="audio" id="audio" type="audio/ogg">
+        <source src="audio" id="audio" type="audio/mpeg">
+      </audio>
+
+
+      <audio src="miaudio.mp3" controls> este es un elemento de audio no soportado por tu navegador, prueba con otro </audio>
+</body>
+
+</html>
